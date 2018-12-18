@@ -1,6 +1,7 @@
 package com.davidpinilla.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ public class ClientController {
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(Model theModel) {
 		theModel.addAttribute("title", "Client list");
+		theModel.addAttribute("clients", clientDAO.findAll());
 		return "list";
 	}
 }
