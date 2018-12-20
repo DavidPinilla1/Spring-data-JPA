@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.qos.logback.core.net.server.Client;
+import com.davidpinilla.models.entity.Client;
+
 
 @Repository
 public class ClientDAO implements ClientDAOInterface{
@@ -19,6 +21,11 @@ public class ClientDAO implements ClientDAOInterface{
 	public List<Client> findAll() {
 	
 		return em.createQuery("from Client").getResultList();
+	}
+	@Override
+	@Transactional
+	public void save(Client client) {
+		em.persist(client);
 	}
 
 }
