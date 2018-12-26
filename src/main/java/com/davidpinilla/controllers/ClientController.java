@@ -15,18 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.davidpinilla.models.dao.ClientDAOInterface;
 import com.davidpinilla.models.entity.Client;
+import com.davidpinilla.models.service.IClientService;
+
 
 @Controller
 @SessionAttributes("client")
 public class ClientController {
 	@Autowired
-	private ClientDAOInterface clientDAO;
+	private IClientService clientService;
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model theModel) {
 		theModel.addAttribute("title", "Client list");
-		theModel.addAttribute("clients", clientDAO.findAll());
+		theModel.addAttribute("clients", clientService.findAll());
 		return "list";
 	}
 	@GetMapping(value="/form")
@@ -41,7 +42,7 @@ public class ClientController {
 	public String edit(@PathVariable(value="id") Long id, Map<String, Object> model) {
 		Client client=null;
 		if(id>0) {
-			client=clientDAO.findOne(id);
+			client=clientService.findOne(id);
 		}else {
 			return "redirect:/list";
 		}
@@ -57,14 +58,14 @@ public class ClientController {
 		if(result.hasErrors()) {
 			return "form";
 		}
-		clientDAO.save(client);
+		clientService.save(client);
 		status.setComplete();
 		return"redirect:list";
 	}
 	@RequestMapping(value="/delete/{id}")
 	public String delete(@PathVariable(value="id") Long id) {
 	if(id>0) {
-		clientDAO.delete(id);
+		clientService.delete(id);
 		
 	}
 	return "redirect:/list";
