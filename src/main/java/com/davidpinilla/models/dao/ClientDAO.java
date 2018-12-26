@@ -35,5 +35,10 @@ public class ClientDAO implements ClientDAOInterface{
 	public Client findOne(Long id) {
 		return em.find(Client.class, id);
 	}
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		em.remove(findOne(id)); 
+	}
 
 }

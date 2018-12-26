@@ -33,7 +33,7 @@ public class ClientController {
 	public String create (Map<String, Object> model) {
 		Client client=new Client();
 		model.put("client", client);
-		model.put("title", "Client Form");
+		model.put("title", "New Client");
 		return "form";
 	}
 	
@@ -49,6 +49,7 @@ public class ClientController {
 		model.put("title", "Edit Client");
 		return "form";
 	}
+	
 	@RequestMapping(value="/form", method=RequestMethod.POST)
 	public String save(@Valid Client client, BindingResult result, Model model, SessionStatus status ) {
 
@@ -59,5 +60,13 @@ public class ClientController {
 		clientDAO.save(client);
 		status.setComplete();
 		return"redirect:list";
+	}
+	@RequestMapping(value="/delete/{id}")
+	public String delete(@PathVariable(value="id") Long id) {
+	if(id>0) {
+		clientDAO.delete(id);
+		
+	}
+	return "redirect:/list";
 	}
 }
