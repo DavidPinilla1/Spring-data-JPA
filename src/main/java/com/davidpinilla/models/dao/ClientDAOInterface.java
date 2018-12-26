@@ -8,4 +8,5 @@ import com.davidpinilla.models.entity.Client;
 public interface ClientDAOInterface {
 	public List<Client> findAll();
 	public void save(Client client);
+	public Client findOne(Long id);
 }

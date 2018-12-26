@@ -9,12 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="clients")
@@ -37,6 +37,10 @@ public class Client implements Serializable{
 	private Date createdAt;
 	@PrePersist
 	public void prePersist() {
+		createdAt=new Date();
+	}
+	@PreUpdate
+	public void preUpdate() {
 		createdAt=new Date();
 	}
 	public Long getId() {
