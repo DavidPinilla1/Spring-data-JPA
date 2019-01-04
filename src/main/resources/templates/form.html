@@ -4,8 +4,11 @@
 <body>
 	<header th:replace="layout/layout::header"></header>
 
-	<div class="container">
-		<h1 th:text="${title}" class="text-secondary"></h1>
+	<div class="container py-4">
+		<div class="card bg-dark text-white">
+		<div class="card-header" th:text="${title}"></div>
+		
+		<div class="card-body">
 		<div th:object="${client}" th:remove="tag">
 			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
 				role="alert">
@@ -44,7 +47,7 @@
 			</div>
 
 			<div class="col-sm-6">
-				<button type="submit" class="btn btn-primary">Create new
+				<button type="submit" class="btn btn-secondary">Create new
 					Client</button>
 			</div>
 		</form>
