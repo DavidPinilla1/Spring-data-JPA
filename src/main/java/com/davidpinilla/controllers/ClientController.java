@@ -1,5 +1,9 @@
 package com.davidpinilla.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.davidpinilla.controllers.util.paginator.PageRender;
@@ -69,12 +74,24 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String save(@Valid Client client, BindingResult result, Model model, RedirectAttributes flash,
+	public String save(@Valid Client client, BindingResult result, Model model,@RequestParam(name="file") MultipartFile photo, RedirectAttributes flash,
 			SessionStatus status) {
 
 		model.addAttribute("title", "Client Form");
 		if (result.hasErrors()) {
 			return "form";
+		}
+		if(!photo.isEmpty()) {
+			Path resourcesDirectory=Paths.get("src//main//resources//static/uploads");
+			String rootPath=resourcesDirectory.toFile().getAbsolutePath();
+			try {
+				byte[] bytes=photo.getBytes();
+				Path completeRoot=Paths.get(rootPath+"//"+photo.getOriginalFilename());
+				Files.write(completeRoot, bytes);
+				flash.addFlashAttribute("info", "Has subido correctamente "+photo.getOriginalFilename()+".");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		String Flashmessage = client.getId() != null ? "Client edited successfully" : "Client created successfully";
 		clientService.save(client);
