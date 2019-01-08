@@ -34,6 +34,18 @@ import com.davidpinilla.models.service.IClientService;
 public class ClientController {
 	@Autowired
 	private IClientService clientService;
+	
+	@GetMapping(value="/view/{id}")
+	public String view(@PathVariable(value="id") Long id, Map<String, Object> model,RedirectAttributes flash ) {
+		Client client=clientService.findOne(id);
+		if(client==null) {
+		flash.addFlashAttribute("error", "The client does not exist in the database");
+		return "redirect:/list";
+		}
+		model.put("client", client);
+		model.put("title", "Client Detail: "+client.getName()+" "+client.getLastname());
+		return "view";
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@RequestParam(name = "page", defaultValue = "0") int page, Model theModel) {
