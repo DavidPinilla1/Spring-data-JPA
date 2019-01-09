@@ -6,7 +6,7 @@
 	<div class="container py-4">
 		<div class="card bg-light">
 			<div class="card-header" th:text="${title}"></div>
-			<img  th:if="${client.photo}" class="img-thumnail rounded float-left" style="max-width:25%;" 
+			<img   class="img-thumnail rounded float-left" style="max-width:20%;" 
 			th:src="@{'/uploads/'+ ${client.photo}}" th:alt="${client.photo}"/>
 			<div class="card-body">
 			<ul class="list-group">
