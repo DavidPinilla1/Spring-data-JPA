@@ -35,7 +35,7 @@ public class Client implements Serializable{
 	@Column(name="create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
-	@Column
+	
 	private String photo;
 	public String getPhoto() {
 		return photo;

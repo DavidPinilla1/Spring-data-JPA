@@ -100,7 +100,8 @@ public class ClientController {
 				byte[] bytes=photo.getBytes();
 				Path completeRoot=Paths.get(rootPath+"//"+photo.getOriginalFilename());
 				Files.write(completeRoot, bytes);
-				flash.addFlashAttribute("info", "Has subido correctamente "+photo.getOriginalFilename()+".");
+				flash.addFlashAttribute("info", "Photo "+photo.getOriginalFilename()+" successfully uploaded.");
+				client.setPhoto(photo.getOriginalFilename());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
